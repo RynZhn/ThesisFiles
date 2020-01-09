@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy.fft as fft
 import numpy as np
-
+import os
 
 # create a list for the different accelleration data
 xacel, yacel, zacel = [[]],[[]],[[]]
@@ -10,7 +10,7 @@ xacel, yacel, zacel = [[]],[[]],[[]]
 rotorspeed = [[]]
 
 # read the data file
-data_file = open(".\Data\wind-vibes-2019-Nov-5\wind-vibes-2019-Nov-5\wind-vibes-2019-Nov-5.txt","r")
+data_file = open("../Data/wind-vibes-2019-Nov-5.txt","r")
 
 # Variables to keep track of which data set we're on and which line of data
 dataSet = 0
@@ -50,6 +50,7 @@ plt.figure(2)
 ps = np.abs((fft.fft(xacel[2])))**2
 plt.plot(freq,ps)
 
+plt.show()
 #
 #plt.plot(xacel[2])
 #plt.plot(yacel[2])
