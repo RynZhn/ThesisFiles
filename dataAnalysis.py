@@ -10,7 +10,7 @@ xacel, yacel, zacel = [[]],[[]],[[]]
 rotorspeed = [[]]
 
 # read the data file
-data_file = open(".\Data\wind-vibes-2019-Nov-5\wind-vibes-2019-Nov-5.txt","r")
+data_file = open(".\Data\wind-vibes-2019-Nov-5\wind-vibes-2019-Nov-5\wind-vibes-2019-Nov-5.txt","r")
 
 # Variables to keep track of which data set we're on and which line of data
 dataSet = 0
