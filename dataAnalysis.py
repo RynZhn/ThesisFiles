@@ -40,18 +40,24 @@ for line in data_file:
 data_file.close()
 
 print("Total amount of data sets: ",dataSet+1)
-plt.figure(1)
+#Getting the power spectra
+
+#The following commented code is wrong. I'm not sure why buy it returns a power spectra with negative values which is impossible
+""" plt.figure(1)
 sp = (fft.rfft(xacel[2]))**2
-freq = fft.fftfreq(len(xacel[2]),d=.02)
 freqrange = np.linspace(0, 50/2, len(sp))
 plt.plot(freqrange,sp)
-
-plt.figure(2)
+ """
+plt.figure(1)
+#Use numpy's libraries to calculate the FFT and then squre it to get the pwoer spectra.
 ps = np.abs((fft.fft(xacel[2])))**2
+freq = fft.fftfreq(len(xacel[2]),d=.02)
 plt.plot(freq,ps)
 
 plt.show()
-#
-#plt.plot(xacel[2])
-#plt.plot(yacel[2])
-#plt.plot(zacel[2])
+
+"""
+The result of this power spectrum has some kind of artefact where there's a huge spike 
+in the begining. I remember that there was a reason for this but I need to find where 
+I read it. I believe it has something to do with the phase of the signal?
+"""
