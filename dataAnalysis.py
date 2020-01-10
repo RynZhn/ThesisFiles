@@ -50,11 +50,25 @@ plt.plot(freqrange,sp)
  """
 plt.figure(1)
 #Use numpy's libraries to calculate the FFT and then squre it to get the pwoer spectra.
-ps = np.abs((fft.fft(xacel[2])))**2
+psx = np.abs((fft.fft(xacel[2])))**2
 freq = fft.fftfreq(len(xacel[2]),d=.02)
-plt.plot(freq,ps)
+plt.plot(freq,psx)
 
+#create power spectrum for y axis.
+plt.figure(2)
+psy = np.abs((fft.fft(yacel[2])))**2
+plt.plot(freq,psy)
+
+#create power spectrum for z axis. 
+plt.figure(3)
+psz = np.abs((fft.fft(zacel[2])))**2
+plt.plot(freq,psz)
+
+plt.figure(4)
+plt.plot(zacel[2])
 plt.show()
+
+
 
 """
 The result of this power spectrum has some kind of artefact where there's a huge spike 
