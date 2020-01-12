@@ -60,6 +60,12 @@ psy = np.abs((fft.fft(yacel[2])))**2
 plt.plot(freq,psy)
 
 #create power spectrum for z axis. 
+"""
+because the z axis has a 1 unit bias due to gravity, the FFT has a huge 0
+value. To counter this, remove 1 from the dataset.
+
+"""
+zacel[2] = [x-1 for x in zacel[2]]
 plt.figure(3)
 psz = np.abs((fft.fft(zacel[2])))**2
 plt.plot(freq,psz)
