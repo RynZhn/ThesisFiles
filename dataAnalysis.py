@@ -15,7 +15,7 @@ rotorspeed = [[]]
 data_file = open("../Data/wind-vibes-2019-Nov-5.txt","r")
 
 # Variables to keep track of which data set we're on and which line of data
-dataSet = 0
+dataSet = 0 
 
 # read through each line in the file
 for line in data_file:
@@ -43,6 +43,45 @@ data_file.close()
 
 print("Total amount of data sets: ",dataSet+1)
 
+startIndex,endIndex = input("Enter which data sets you would like to get the PS [ x , y ] (sets x to y) ").split(",")
+
+startIndex = int(startIndex)
+endIndex = int(endIndex)
+
+#try and average the above power spectrums
+validSets = 0 #keeps track of the number of valid data sets so we know how to average
+PSXAve = [0]*1024
+for dataSet in xacel[startIndex:endIndex]:
+    [ps,freq] = CalcPowerSpec(dataSet,.02)                             #get the power spectrum
+    if len(ps) == 1024:                                                 #check to see if power spectrum is valid length
+        validSets += 1                                                      #if it is, incrememnt the count
+        PSXAve = [x + y for x,y in zip(PSXAve,ps)]                      #and add the new ps to the total sum
+
+PSXAve = [x/validSets for x in PSXAve]                                      #divide each element by the total amount to get the average
+
+
+plt.figure(5)
+plt.plot(freq,PSXAve)
+
+
+startIndex,endIndex = input("Enter which data sets you would like to get the PS [ x , y ] (sets x to y) ").split(",")
+
+startIndex = int(startIndex)
+endIndex = int(endIndex)
+
+#try and average the above power spectrums
+validSets = 0 #keeps track of the number of valid data sets so we know how to average
+PSXAve = [0]*1024
+for dataSet in xacel[startIndex:endIndex]:
+    [ps,freq] = CalcPowerSpec(dataSet,.02)                             #get the power spectrum
+    if len(ps) == 1024:                                                 #check to see if power spectrum is valid length
+        validSets += 1                                                      #if it is, incrememnt the count
+        PSXAve = [x + y for x,y in zip(PSXAve,ps)]                      #and add the new ps to the total sum
+
+PSXAve = [x/validSets for x in PSXAve]                                      #divide each element by the total amount to get the average
+
+plt.figure(6)
+plt.plot(freq,PSXAve)
 
 plt.figure(3)
 [ps1,freq1] = CalcPowerSpec(xacel[300],.02)
@@ -60,19 +99,4 @@ psAve = [(x + y + z)/3 for x,y,z in zip(ps3,ps1,ps2)]
 plt.figure(4)
 plt.plot(freq1,psAve)
 
-
-#try and average the above power spectrums
-validSets = 0 #keeps track of the number of valid data sets so we know how to average
-PSXAve = [0]*1024
-for dataSet in xacel:
-    [ps,freq] = CalcPowerSpec(dataSet,.02)                             #get the power spectrum
-    if len(ps) == 1024:                                                 #check to see if power spectrum is valid length
-        validSets += 1                                                      #if it is, incrememnt the count
-        PSXAve = [x + y for x,y in zip(PSXAve,ps)]                      #and add the new ps to the total sum
-
-PSXAve = [x/validSets for x in PSXAve]                                      #divide each element by the total amount to get the average
-
-
-plt.figure(5)
-plt.plot(freq1,PSXAve)
 plt.show()
