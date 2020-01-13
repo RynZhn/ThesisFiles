@@ -52,44 +52,7 @@ for line in data_file:
 data_file.close()
 
 print("Total amount of data sets: ",dataSet+1)
-#Getting the power spectra
 
-#for each set of data take the fft and add it to the average
-PSAveX = np.empty(1024)
-count = 0 #Number of valid power spectrum calculations that we can average. 
-for xset in xacel:
-    #for every set of data, calculate the power spectra
-    #when calculating the power spectra, find the average of the set and remove it
-    mean = sum(xset)/len(xset)
-    xset = [x-mean for x in xset]
-    psx = np.abs((fft.fft(xset)))**2
-
-    # we only want sets of data that we can average so check their lengths
-    if len(psx) == 1024:
-        #if this set has the right length, add it to the overal power spectra list to be averaged
-        i = 0
-        for val in psx:
-
-            PSAveX[i] = val
-            i += 1
-        #increment count to keep track of how many valid power spectra there are
-        count += 1
-        #calc the frequency bins using only valid datasets
-        #the current placement of this isnt optimal but what are you going to do?
-    
-        freq = fft.fftfreq(len(xset),d=.02)
-print(count)
-"""     if len(psx) == 1024:
-        i = 0
-        for val in psx:
-            PSAveX[i] += val
-            i += 1
-        count += 1 """
-PSAveX = [x/count for x in PSAveX]
-
-plt.figure(0)
-""" freq = fft.fftfreq(len(xacel[2]),d=.02) """
-plt.plot(freq,PSAveX)
 
 plt.figure(3)
 [ps1,freq1] = CalcPowerSpec(xacel[300],.02)
@@ -103,9 +66,23 @@ plt.figure(2)
 [ps3,freq1] = CalcPowerSpec(xacel[7],.02)
 plt.plot(freq1,ps3)
 
-#try and average the above power spectrums
-for dataSet
 psAve = [(x + y + z)/3 for x,y,z in zip(ps3,ps1,ps2)]
 plt.figure(4)
 plt.plot(freq1,psAve)
+
+
+#try and average the above power spectrums
+validSets = 0 #keeps track of the number of valid data sets so we know how to average
+PSXAve = [0]*1024
+for dataSet in xacel:
+    [ps,freq] = CalcPowerSpec(dataSet,.02)                             #get the power spectrum
+    if len(ps) == 1024:                                                 #check to see if power spectrum is valid length
+        validSets += 1                                                      #if it is, incrememnt the count
+        PSXAve = [x + y for x,y in zip(PSXAve,ps)]                      #and add the new ps to the total sum
+
+PSXAve = [x/validSets for x in PSXAve]                                      #divide each element by the total amount to get the average
+
+
+plt.figure(5)
+plt.plot(freq1,PSXAve)
 plt.show()
