@@ -3,6 +3,18 @@ import numpy.fft as fft
 import numpy as np
 import os
 
+def CalcPowerSpec (dataArray,dataRate):
+    """ This function removes a fixed bias from the data
+    and calculates the power spectrum and frequency range of the dataset.
+    The output is two arrays. Input is data array and time between datapoints
+    """
+    mean = sum(dataArray)/len(dataArray)
+    dataArray = [x-mean for x in dataArray]
+    ps = np.abs((fft.fft(dataArray)))**2
+    freq = fft.fftfreq(len(xacel[314]),d=dataRate)
+    return [dataArray,freq]
+
+
 # create a list for the different accelleration data
 xacel, yacel, zacel = [[]],[[]],[[]]
 
@@ -47,13 +59,17 @@ PSAveX = np.empty(1024)
 count = 0 #Number of valid power spectrum calculations that we can average. 
 for xset in xacel:
     #for every set of data, calculate the power spectra
+    #when calculating the power spectra, find the average of the set and remove it
+    mean = sum(xset)/len(xset)
+    xset = [x-mean for x in xset]
     psx = np.abs((fft.fft(xset)))**2
     # we only want sets of data that we can average so check their lengths
     if len(psx) == 1024:
         #if this set has the right length, add it to the overal power spectra list to be averaged
         i = 0
         for val in psx:
-            PSAveX[i] += val
+
+            PSAveX[i] = val
             i += 1
         #increment count to keep track of how many valid power spectra there are
         count += 1
@@ -61,25 +77,31 @@ for xset in xacel:
         #the current placement of this isnt optimal but what are you going to do?
     
         freq = fft.fftfreq(len(xset),d=.02)
-
+print(count)
 """     if len(psx) == 1024:
         i = 0
         for val in psx:
             PSAveX[i] += val
             i += 1
         count += 1 """
-
+PSAveX = [x/count for x in PSAveX]
 
 #PSAveX = [x/count for x in PSAveX]
 plt.figure(0)
-psx = np.abs((fft.fft(xacel[200])))**2
 """ freq = fft.fftfreq(len(xacel[2]),d=.02) """
 plt.plot(freq,PSAveX)
 
 plt.figure(5)
-psx = np.abs((fft.fft(xacel[200])))**2
+mean = sum(xacel[314])/len(xacel[314])
+fftdata = [x-mean for x in xacel[314]]
+psx1 = np.abs((fft.fft(fftdata)))**2
+freq = fft.fftfreq(len(xacel[314]),d=.02)
+plt.plot(freq,psx1)
+
+plt.figure(6)
+psx2= np.abs((fft.fft(xacel[200])))**2
 freq = fft.fftfreq(len(xacel[200]),d=.02)
-plt.plot(freq,psx)
+plt.plot(freq,psx2)
 
 """ plt.figure(1)
 #Use numpy's libraries to calculate the FFT and then squre it to get the pwoer spectra.
