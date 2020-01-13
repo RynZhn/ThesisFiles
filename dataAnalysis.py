@@ -104,6 +104,7 @@ plt.figure(2)
 plt.plot(freq1,ps3)
 
 #try and average the above power spectrums
+for dataSet
 psAve = [(x + y + z)/3 for x,y,z in zip(ps3,ps1,ps2)]
 plt.figure(4)
 plt.plot(freq1,psAve)
