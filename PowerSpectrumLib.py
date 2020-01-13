@@ -1,3 +1,6 @@
+import numpy.fft as fft
+import numpy as np
+
 def CalcPowerSpec (dataArray,dataRate):
     """ This function removes a fixed bias from the data
     and calculates the power spectrum and frequency range of the dataset.
