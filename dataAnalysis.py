@@ -63,6 +63,7 @@ for xset in xacel:
     mean = sum(xset)/len(xset)
     xset = [x-mean for x in xset]
     psx = np.abs((fft.fft(xset)))**2
+
     # we only want sets of data that we can average so check their lengths
     if len(psx) == 1024:
         #if this set has the right length, add it to the overal power spectra list to be averaged
@@ -86,51 +87,24 @@ print(count)
         count += 1 """
 PSAveX = [x/count for x in PSAveX]
 
-#PSAveX = [x/count for x in PSAveX]
 plt.figure(0)
 """ freq = fft.fftfreq(len(xacel[2]),d=.02) """
 plt.plot(freq,PSAveX)
 
-plt.figure(5)
-[ps1,freq1] = CalcPowerSpec(xacel[200],.02)
+plt.figure(3)
+[ps1,freq1] = CalcPowerSpec(xacel[300],.02)
 plt.plot(freq1,ps1)
 
-plt.figure(6)
-psx2= np.abs((fft.fft(xacel[200])))**2
-freq = fft.fftfreq(len(xacel[200]),d=.02)
-plt.plot(freq,psx2)
+plt.figure(1)
+[ps2,freq] = CalcPowerSpec(xacel[113],.02)
+plt.plot(freq,ps2)
 
-""" plt.figure(1)
-#Use numpy's libraries to calculate the FFT and then squre it to get the pwoer spectra.
-#psx = np.abs((fft.fft(xacel[316])))**2
-freq = fft.fftfreq(len(xacel[2]),d=.02)
-plt.plot(freq,PSAveX)
-print(len(psx))
- """
-#create power spectrum for y axis.
 plt.figure(2)
-psy = np.abs((fft.fft(yacel[2])))**2
-plt.plot(freq,psy)
+[ps3,freq1] = CalcPowerSpec(xacel[7],.02)
+plt.plot(freq1,ps3)
 
-#create power spectrum for z axis. 
-"""
-because the z axis has a 1 unit bias due to gravity, the FFT has a huge 0
-value. To counter this, remove 1 from the dataset.
-
-"""
-zacel[2] = [x-1 for x in zacel[2]]
-plt.figure(3)
-psz = np.abs((fft.fft(zacel[2])))**2
-plt.plot(freq,psz)
-
+#try and average the above power spectrums
+psAve = [(x + y + z)/3 for x,y,z in zip(ps3,ps1,ps2)]
 plt.figure(4)
-plt.plot(zacel[2])
+plt.plot(freq1,psAve)
 plt.show()
-
-
-
-"""
-The result of this power spectrum has some kind of artefact where there's a huge spike 
-in the begining. I remember that there was a reason for this but I need to find where 
-I read it. I believe it has something to do with the phase of the signal?
-"""
