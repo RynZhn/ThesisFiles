@@ -9,10 +9,10 @@ def CalcPowerSpec (dataArray,dataRate):
     The output is two arrays. Input is data array and time between datapoints
     """
     mean = sum(dataArray)/len(dataArray)
-    dataArray = [x-mean for x in dataArray]
-    ps = np.abs((fft.fft(dataArray)))**2
-    freq = fft.fftfreq(len(xacel[314]),d=dataRate)
-    return [dataArray,freq]
+    correctedArray = [x-mean for x in dataArray]
+    ps = np.abs((fft.fft(correctedArray)))**2
+    freq = fft.fftfreq(len(correctedArray),d=dataRate)
+    return [ps,freq]
 
 
 # create a list for the different accelleration data
@@ -92,11 +92,8 @@ plt.figure(0)
 plt.plot(freq,PSAveX)
 
 plt.figure(5)
-mean = sum(xacel[314])/len(xacel[314])
-fftdata = [x-mean for x in xacel[314]]
-psx1 = np.abs((fft.fft(fftdata)))**2
-freq = fft.fftfreq(len(xacel[314]),d=.02)
-plt.plot(freq,psx1)
+[ps1,freq1] = CalcPowerSpec(xacel[200],.02)
+plt.plot(freq1,ps1)
 
 plt.figure(6)
 psx2= np.abs((fft.fft(xacel[200])))**2
