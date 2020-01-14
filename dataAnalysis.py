@@ -51,19 +51,38 @@ endIndex = int(endIndex)
 #try and average the above power spectrums
 validSets = 0 #keeps track of the number of valid data sets so we know how to average
 PSXAve = [0]*1024
+PSYAve = [0]*1024
+PSZAve = [0]*1024
+
 currentIndex = startIndex
-for dataSet in xacel[startIndex:endIndex]:
-    [ps,freq] = CalcPowerSpec(dataSet,.02)                             #get the power spectrum
-    if len(ps) == 1024:                                                 #check to see if power spectrum is valid length
+for i in range(startIndex,endIndex+1):
+    [psx,freqx] = CalcPowerSpec(xacel[i],.02)                             #get the power spectrum
+    [psy,freqy] = CalcPowerSpec(yacel[i],.02)
+    [psz,freqz] = CalcPowerSpec(zacel[i],.02)
+    if len(psx) == 1024 and len(psy) == 1024 and len(psz) == 1024:                                                 #check to see if power spectrum is valid length
         validSets += 1                                                      #if it is, incrememnt the count
-        PSXAve = [x + y for x,y in zip(PSXAve,ps)]                      #and add the new ps to the total sum
+        PSXAve = [x + y for x,y in zip(PSXAve,psx)]                      #and add the new ps to the total sum
+        PSYAve = [x + y for x,y in zip(PSYAve,psy)]  
+        PSZAve = [x + y for x,y in zip(PSZAve,psz)]  
+        freq = freqz
     else:
-        print("Bad length for index: ",currentIndex)
+        print("Bad length at index: ",currentIndex)
     currentIndex += 1
 PSXAve = [x/validSets for x in PSXAve]                                      #divide each element by the total amount to get the average
+PSYAve = [x/validSets for x in PSYAve]
+PSZAve = [x/validSets for x in PSZAve]
 
 
-plt.figure(5)
+fig1 = plt.figure(1)
+fig1.suptitle("Averaged Power Spectrum for X")
 plt.plot(freq,PSXAve)
+
+fig2 = plt.figure(2)
+fig2.suptitle("Averaged Power Spectrum for Y")
+plt.plot(freq,PSYAve)
+
+fig3 = plt.figure(3)
+fig3.suptitle("Averaged Power Spectrum for Z")
+plt.plot(freq,PSZAve)
 
 plt.show()
