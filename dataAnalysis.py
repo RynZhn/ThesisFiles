@@ -66,20 +66,4 @@ PSXAve = [x/validSets for x in PSXAve]                                      #div
 plt.figure(5)
 plt.plot(freq,PSXAve)
 
-plt.figure(3)
-[ps1,freq1] = CalcPowerSpec(xacel[300],.02)
-plt.plot(freq1,ps1)
-
-plt.figure(1)
-[ps2,freq] = CalcPowerSpec(xacel[113],.02)
-plt.plot(freq,ps2)
-
-plt.figure(2)
-[ps3,freq1] = CalcPowerSpec(xacel[7],.02)
-plt.plot(freq1,ps3)
-
-psAve = [(x + y + z)/3 for x,y,z in zip(ps3,ps1,ps2)]
-plt.figure(4)
-plt.plot(freq1,psAve)
-
 plt.show()
