@@ -11,3 +11,9 @@ def CalcPowerSpec (dataArray,dataRate):
     ps = np.abs((fft.fft(correctedArray)))**2
     freq = fft.fftfreq(len(correctedArray),d=dataRate)
     return [ps,freq]
+
+def CalcBiSpec (dataArray,dataRate):
+    """ This function removes the mean of the data set and 
+    calculates the bispectrum and puts it into an array.
+    Output should be just an array."""
+    
