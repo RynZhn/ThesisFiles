@@ -19,4 +19,7 @@ def CalcBiSpec (dataArray,dataRate):
     mean = sum(dataArray)/len(dataArray)
     correctedArray = [x-mean for x in dataArray]
     transform = fft.fft(correctedArray)
-    len(transform)
+    biSpecArray = [[]]
+    for f1 in range(len(transform)/2):
+        for f2 in range(len(transform)/2):
+            biSpecArray[f1].append
