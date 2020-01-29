@@ -16,4 +16,7 @@ def CalcBiSpec (dataArray,dataRate):
     """ This function removes the mean of the data set and 
     calculates the bispectrum and puts it into an array.
     Output should be just an array."""
-    
+    mean = sum(dataArray)/len(dataArray)
+    correctedArray = [x-mean for x in dataArray]
+    transform = fft.fft(correctedArray)
+    len(transform)
