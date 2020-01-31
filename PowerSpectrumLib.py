@@ -22,4 +22,4 @@ def CalcBiSpec (dataArray,dataRate):
     biSpecArray = [[]]
     for f1 in range(len(transform)/2):
         for f2 in range(len(transform)/2):
-            biSpecArray[f1].append
+            biSpecArray[f1].append(transform(f1)*transform(f2)*transform(f1+f2+512))
