@@ -3,7 +3,7 @@ import numpy.fft as fft
 import numpy as np
 import os
 
-from PowerSpectrumLib import CalcPowerSpec
+from PowerSpectrumLib import CalcPowerSpec, CalcBiSpec
 
 # create a list for the different accelleration data
 xacel, yacel, zacel = [[]],[[]],[[]]
@@ -43,7 +43,7 @@ data_file.close()
 
 print("Total amount of data sets: ",dataSet)
 
-
+CalcBiSpec()
 
 startIndex,endIndex = input("Enter which data sets you would like to get the PS [ x , y ] (sets x to y) ").split(",")
 
