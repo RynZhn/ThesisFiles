@@ -77,12 +77,4 @@ fig1 = plt.figure(1)
 fig1.suptitle("Averaged Power Spectrum for X")
 plt.plot(freq,PSXAve)
 
-fig2 = plt.figure(2)
-fig2.suptitle("Averaged Power Spectrum for Y")
-plt.plot(freq,PSYAve)
-
-fig3 = plt.figure(3)
-fig3.suptitle("Averaged Power Spectrum for Z")
-plt.plot(freq,PSZAve)
-
 plt.show()
