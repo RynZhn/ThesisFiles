@@ -27,9 +27,11 @@ with open(filename+'.txt',"w") as textfile:
         if(ser.in_waiting() > 0):
             data = ser.readLine()
             dataFile.write(str(data))
+            print("Wrote a line!")
             #I'm not sure what the end of line char is so I'm just going to write a line after
             if data[0]=='$':
                 dataFile.write(str(today)+'\n') #write time stamp
-            print("Wrote a line!")
+                print("Wrote Time Stamp")
+            
 
 
