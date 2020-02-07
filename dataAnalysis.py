@@ -3,7 +3,7 @@ import numpy.fft as fft
 import numpy as np
 import os
 
-from PowerSpectrumLib import CalcPowerSpec
+from PowerSpectrumLib import CalcPowerSpec, CalcBiSpec
 
 # create a list for the different accelleration data
 xacel, yacel, zacel = [[]],[[]],[[]]
@@ -12,7 +12,7 @@ xacel, yacel, zacel = [[]],[[]],[[]]
 rotorspeed = [[]]
 
 # read the data file
-data_file = open("../Data/wind-vibes-2019-Nov-5.txt","r")
+data_file = open("../Data/wind-vibes-2019-Nov-5/wind-vibes-2019-Nov-5.txt","r")
 
 # Variables to keep track of which data set we're on and which line of data
 dataSet = 0 
@@ -42,6 +42,8 @@ for line in data_file:
 data_file.close()
 
 print("Total amount of data sets: ",dataSet)
+
+CalcBiSpec()
 
 startIndex,endIndex = input("Enter which data sets you would like to get the PS [ x , y ] (sets x to y) ").split(",")
 
@@ -75,6 +77,17 @@ PSZAve = [x/validSets for x in PSZAve]
 
 fig1 = plt.figure(1)
 fig1.suptitle("Averaged Power Spectrum for X")
-plt.plot(freq,PSXAve)
+plt.plot(freq[0:511],PSXAve[0:511])
 
+<<<<<<< HEAD
+=======
+fig2 = plt.figure(2)
+fig2.suptitle("Averaged Power Spectrum for Y")
+plt.plot(freq[0:511],PSYAve[0:511])
+
+fig3 = plt.figure(3)
+fig3.suptitle("Averaged Power Spectrum for Z")
+plt.plot(freq[0:511],PSZAve[0:511])
+
+>>>>>>> origin
 plt.show()
