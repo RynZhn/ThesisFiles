@@ -15,7 +15,7 @@ filename = filename.replace('.','_')
 
 
 #open serial connection.
-ser = serial.Serial(arg.SerPort) #Remember to put in the address.
+ser = serial.Serial(args.SerPort) #Remember to put in the address.
 ser.open()
 ser.reset_input_buffer() #might also be:
 #ser.flushInput()
