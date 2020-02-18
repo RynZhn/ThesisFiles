@@ -75,12 +75,13 @@ PSYAve = [x/validSets for x in PSYAve]
 PSZAve = [x/validSets for x in PSZAve]
 
 
+bispec = CalcBiSpec(xacel[3])
+
+
 fig1 = plt.figure(1)
 fig1.suptitle("Averaged Power Spectrum for X")
 plt.plot(freq[0:511],PSXAve[0:511])
 
-<<<<<<< HEAD
-=======
 fig2 = plt.figure(2)
 fig2.suptitle("Averaged Power Spectrum for Y")
 plt.plot(freq[0:511],PSYAve[0:511])
@@ -89,5 +90,4 @@ fig3 = plt.figure(3)
 fig3.suptitle("Averaged Power Spectrum for Z")
 plt.plot(freq[0:511],PSZAve[0:511])
 
->>>>>>> origin
 plt.show()
