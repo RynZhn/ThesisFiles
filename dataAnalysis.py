@@ -12,7 +12,7 @@ xacel, yacel, zacel = [[]],[[]],[[]]
 rotorspeed = [[]]
 
 # read the data file
-data_file = open("../Data/wind-vibes-2019-Nov-5/wind-vibes-2019-Nov-5.txt","r")
+data_file = open("../Data/wind-vibes-2019-Nov-5.txt","r")
 
 # Variables to keep track of which data set we're on and which line of data
 dataSet = 0 
@@ -43,7 +43,7 @@ data_file.close()
 
 print("Total amount of data sets: ",dataSet)
 
-CalcBiSpec()
+CalcBiSpec(xacel[2])
 
 startIndex,endIndex = input("Enter which data sets you would like to get the PS [ x , y ] (sets x to y) ").split(",")
 
