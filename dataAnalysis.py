@@ -12,7 +12,7 @@ xacel, yacel, zacel = [[]],[[]],[[]]
 rotorspeed = [[]]
 
 # read the data file
-data_file = open("../Data/wind-vibes-2019-Nov-5.txt","r")
+data_file = open("..\Data\Test-12-11-80RPM.txt","r")
 
 # Variables to keep track of which data set we're on and which line of data
 dataSet = 0 
@@ -75,19 +75,27 @@ PSYAve = [x/validSets for x in PSYAve]
 PSZAve = [x/validSets for x in PSZAve]
 
 
-bispec = CalcBiSpec(xacel[3])
-
+# bispec = CalcBiSpec(xacel[5])
+# fig, ax = plt.subplots()
+# im = ax.imshow(bispec)
 
 fig1 = plt.figure(1)
 fig1.suptitle("Averaged Power Spectrum for X")
+plt.ylabel("Magnitude")
+plt.xlabel("Frequency [hz]")
 plt.plot(freq[0:511],PSXAve[0:511])
 
 fig2 = plt.figure(2)
 fig2.suptitle("Averaged Power Spectrum for Y")
+plt.ylabel("Magnitude")
+plt.xlabel("Frequency [hz]")
 plt.plot(freq[0:511],PSYAve[0:511])
+
 
 fig3 = plt.figure(3)
 fig3.suptitle("Averaged Power Spectrum for Z")
+plt.ylabel("Magnitude")
+plt.xlabel("Frequency [hz]")
 plt.plot(freq[0:511],PSZAve[0:511])
 
 plt.show()
