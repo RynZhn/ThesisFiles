@@ -3,7 +3,7 @@ import numpy.fft as fft
 import numpy as np
 import os
 
-from PowerSpectrumLib import CalcPowerSpec, CalcBiSpec
+from PowerSpectrumLib import CalcPowerSpec, CalcBiSpec, ReadMatlabFile
 
 # create a list for the different accelleration data
 xacel, yacel, zacel = [[]],[[]],[[]]
@@ -61,7 +61,7 @@ for i in range(startIndex,endIndex+1):
     [psx,freqx] = CalcPowerSpec(xacel[i],.02)                             #get the power spectrum
     [psy,freqy] = CalcPowerSpec(yacel[i],.02)
     [psz,freqz] = CalcPowerSpec(zacel[i],.02)
-    if len(psx) == 1024 and len(psy) == 1024 and len(psz) == 1024:                                                 #check to see if power spectrum is valid length
+    if len(psx) == 1024 and len(psy) == 1024 and len(psz) == 1024:        #check to see if power spectrum is valid length
         validSets += 1                                                      #if it is, incrememnt the count
         PSXAve = [x + y for x,y in zip(PSXAve,psx)]                      #and add the new ps to the total sum
         PSYAve = [x + y for x,y in zip(PSYAve,psy)]  
@@ -75,6 +75,24 @@ PSYAve = [x/validSets for x in PSYAve]
 PSZAve = [x/validSets for x in PSZAve]
 
 
+# Read matlab file and calculate the power spectrum
+matlabSignalDS = ReadMatlabFile("..\Data\SimulationOutput_Downsampled.txt")
+[psmatlabDS, freqmatlabDS]=CalcPowerSpec(matlabSignalDS,.02)
+
+fig1 = plt.figure(7)
+fig1.suptitle("Powerspectrum for matlab script")
+plt.ylabel("Magnitude")
+plt.xlabel("Frequency [hz]")
+plt.plot(freqmatlabDS,psmatlabDS)
+
+matlabSignal = ReadMatlabFile("..\Data\SimulationOutput.txt")
+[psmatlab, freqmatlab]=CalcPowerSpec(matlabSignal,.00001)
+
+fig1 = plt.figure(8)
+fig1.suptitle("Powerspectrum for matlab script")
+plt.ylabel("Magnitude")
+plt.xlabel("Frequency [hz]")
+plt.plot(freqmatlab,psmatlab)
 # bispec = CalcBiSpec(xacel[5])
 # fig, ax = plt.subplots()
 # im = ax.imshow(bispec)

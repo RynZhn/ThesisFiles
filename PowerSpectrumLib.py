@@ -29,3 +29,13 @@ def CalcBiSpec (dataArray):
             biSpecArray[f1].append(transform[f1]*transform[f2]*transform[1023-(f1+f2)])
         biSpecArray.append([])
     return biSpecArray
+
+def ReadMatlabFile(address):
+    ''' This function will read the output of the TowerModel MATLAB 
+    script and process it in a way that is similar to the real lfie 
+    data.'''
+
+    with open(address,'r') as towerData:
+        outputList = towerData.read().splitlines()
+    outputList = [float(x) for x in outputList]
+    return outputList
