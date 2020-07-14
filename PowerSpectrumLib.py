@@ -23,10 +23,13 @@ def CalcBiSpec (dataArray):
     transform = fft.fft(correctedArray)
     biSpecArray = [[]]
     print( range(int(len(transform))) )
-    for f1 in range(int(len(transform))):
-        for f2 in range(int(len(transform))):
-            #The last term adds 511 that is where the conjugate begins.
-            biSpecArray[f1].append(transform[f1]*transform[f2]*transform[1023-(f1+f2)])
+    for f1 in range(int(len(transform)/4)):
+        for f2 in range(int(len(transform)/4)):
+            
+            
+
+
+            biSpecArray[f1].append(transform[f1]*transform[f2]*np.conjugate(transform[f1+f2]))
         biSpecArray.append([])
     return biSpecArray
 
