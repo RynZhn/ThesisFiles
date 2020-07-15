@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy.fft as fft
 import numpy as np
 import os
-
+import seaborn as sb
 from PowerSpectrumLib import CalcPowerSpec, CalcBiSpec, ReadMatlabFile
 
 # create a list for the different accelleration data
@@ -45,10 +45,10 @@ print("Total amount of data sets: ",dataSet)
 
 CalcBiSpec(xacel[2])
 
-startIndex,endIndex = input("Enter which data sets you would like to get the PS [ x , y ] (sets x to y) ").split(",")
+#startIndex,endIndex = input("Enter which data sets you would like to get the PS [ x , y ] (sets x to y) ").split(",")
 
-startIndex = int(startIndex)
-endIndex = int(endIndex)
+startIndex = 1#int(startIndex)
+endIndex = 2#int(endIndex)
 
 #try and average the above power spectrums
 validSets = 0 #keeps track of the number of valid data sets so we know how to average
@@ -74,13 +74,13 @@ PSXAve = [x/validSets for x in PSXAve]                                      #div
 PSYAve = [x/validSets for x in PSYAve]
 PSZAve = [x/validSets for x in PSZAve]
 
-
+####################################### MATLAB SECTION
 # Read matlab file and calculate the power spectrum
 matlabSignalDS = ReadMatlabFile("..\Data\SimulationOutput_Downsampled.txt")
 [psmatlabDS, freqmatlabDS]=CalcPowerSpec(matlabSignalDS,.02)
 
 fig1 = plt.figure(7)
-fig1.suptitle("Powerspectrum for matlab script")
+fig1.suptitle("Powerspectrum of MATLAB Simulation (Downsampled)")
 plt.ylabel("Magnitude")
 plt.xlabel("Frequency [hz]")
 plt.plot(freqmatlabDS,psmatlabDS)
@@ -89,14 +89,12 @@ matlabSignal = ReadMatlabFile("..\Data\SimulationOutput.txt")
 [psmatlab, freqmatlab]=CalcPowerSpec(matlabSignal,.00001)
 
 fig1 = plt.figure(8)
-fig1.suptitle("Powerspectrum for matlab script")
+fig1.suptitle("Powerspectrum of matlab simulation")
 plt.ylabel("Magnitude")
 plt.xlabel("Frequency [hz]")
 plt.plot(freqmatlab,psmatlab)
-# bispec = CalcBiSpec(xacel[5])
-# fig, ax = plt.subplots()
-# im = ax.imshow(bispec)
 
+###################################### REAL DATA
 fig1 = plt.figure(1)
 fig1.suptitle("Averaged Power Spectrum for X")
 plt.ylabel("Magnitude")
@@ -115,5 +113,20 @@ fig3.suptitle("Averaged Power Spectrum for Z")
 plt.ylabel("Magnitude")
 plt.xlabel("Frequency [hz]")
 plt.plot(freq[0:511],PSZAve[0:511])
+
+
+###################################### BISPECTRUM
+
+bispec = CalcBiSpec(yacel[5])
+print(len(bispec))
+for i in bispec:
+    if len(i) != 256:
+        print(len(i))
+plt.figure(9)
+heatmap = sb.heatmap(bispec)
+
+# fig, ax = plt.subplots()
+
+# im = ax.imshow(bispec)
 
 plt.show()

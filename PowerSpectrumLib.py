@@ -25,12 +25,9 @@ def CalcBiSpec (dataArray):
     print( range(int(len(transform))) )
     for f1 in range(int(len(transform)/4)):
         for f2 in range(int(len(transform)/4)):
-            
-            
-
-
-            biSpecArray[f1].append(transform[f1]*transform[f2]*np.conjugate(transform[f1+f2]))
+            biSpecArray[f1].append(transform[f1].real*transform[f2].real*np.conjugate(transform[f1+f2]).real)
         biSpecArray.append([])
+    del biSpecArray[-1]
     return biSpecArray
 
 def ReadMatlabFile(address):
