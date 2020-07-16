@@ -124,7 +124,7 @@ for i in bispec:
         print(len(i))
 plt.figure(9)
 heatmap = sb.heatmap(bispec)
-
+heatmap.set(xlim=(0,25),ylim=(0,25))
 # fig, ax = plt.subplots()
 
 # im = ax.imshow(bispec)
