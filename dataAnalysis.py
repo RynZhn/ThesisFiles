@@ -12,7 +12,7 @@ xacel, yacel, zacel = [[]],[[]],[[]]
 rotorspeed = [[]]
 
 # read the data file
-data_file = open("..\Data\Test-12-11-80RPM.txt","r")
+data_file = open("..\Data\\7-23-2020\80rpm\Test-80rpm-100g-7-23-2020.txt","r")
 
 # Variables to keep track of which data set we're on and which line of data
 dataSet = 0 
@@ -36,6 +36,9 @@ for line in data_file:
             rotorspeed[dataSet].append((float)(line.split(",")[4])/(16*1024))
         except IndexError:
             print("Had an index error in dataset: ",dataSet)
+        except ValueError:
+            print("Had a value error in dataset: ",dataSet)
+
 
 
 
