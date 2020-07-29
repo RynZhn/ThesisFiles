@@ -1,5 +1,6 @@
 import numpy.fft as fft
 import numpy as np
+import pandas
 
 def CalcPowerSpec (dataArray,dataRate):
     """ This function removes a fixed bias from the data
@@ -12,15 +13,16 @@ def CalcPowerSpec (dataArray,dataRate):
     freq = fft.fftfreq(len(correctedArray),d=dataRate)
     return [ps,freq]
 
-def CalcBiSpec (dataArray):
+def CalcBiSpec (dataArray,datarate):
     """ This function removes the mean of the data set and 
     calculates the bispectrum and puts it into an array.
     Output should be just an array."""
    
    
     mean = sum(dataArray)/len(dataArray)
-    correctedArray = [x-mean for x in dataArray]
-    transform = fft.fft(correctedArray)
+    correctedArray = [x-mean for x in dataArray]                             #subtract the average from the data set to set the average to zero
+    transform = fft.fft(correctedArray)                                      #find the fft amplitudes
+    freq = fft.fftfreq(len(correctedArray),d=datarate)                       #find the freq corresponding to the fft amplitudes
     biSpecArray = [[]]
     print( range(int(len(transform))) )
     for f1 in range(int(len(transform)/4)):
@@ -28,7 +30,8 @@ def CalcBiSpec (dataArray):
             biSpecArray[f1].append(transform[f1].real*transform[f2].real*np.conjugate(transform[f1+f2]).real)
         biSpecArray.append([])
     del biSpecArray[-1]
-    return biSpecArray
+    bispecDF = pandas.DataFrame(np.array(biSpecArray),columns = freq, rows = freq)
+    return bispecDF
 
 def ReadMatlabFile(address):
     ''' This function will read the output of the TowerModel MATLAB 

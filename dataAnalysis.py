@@ -48,10 +48,10 @@ print("Total amount of data sets: ",dataSet)
 
 CalcBiSpec(xacel[2])
 
-#startIndex,endIndex = input("Enter which data sets you would like to get the PS [ x , y ] (sets x to y) ").split(",")
+startIndex,endIndex = input("Enter which data sets you would like to get the PS [ x , y ] (sets x to y) ").split(",")
 
-startIndex = 1#int(startIndex)
-endIndex = 2#int(endIndex)
+startIndex = int(startIndex)
+endIndex = int(endIndex)
 
 #try and average the above power spectrums
 validSets = 0 #keeps track of the number of valid data sets so we know how to average
@@ -126,8 +126,9 @@ for i in bispec:
     if len(i) != 256:
         print(len(i))
 plt.figure(9)
-heatmap = sb.heatmap(bispec)
+heatmap,ax = sb.heatmap(bispec)
 heatmap.set(xlim=(0,25),ylim=(0,25))
+ax.set
 # fig, ax = plt.subplots()
 
 # im = ax.imshow(bispec)
