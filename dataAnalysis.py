@@ -4,7 +4,7 @@ import numpy as np
 import os
 import seaborn as sb
 from PowerSpectrumLib import CalcPowerSpec, CalcBiSpec, ReadMatlabFile
-
+import pandas
 # create a list for the different accelleration data
 xacel, yacel, zacel = [[]],[[]],[[]]
 
@@ -12,7 +12,7 @@ xacel, yacel, zacel = [[]],[[]],[[]]
 rotorspeed = [[]]
 
 # read the data file
-data_file = open("..\Data\\7-23-2020\80rpm\Test-80rpm-100g-7-23-2020.txt","r")
+data_file = open("..\Data\\7-23-2020\\160rpm\Test-160rpm-100g-7-23-2020.txt","r")
 
 # Variables to keep track of which data set we're on and which line of data
 dataSet = 0 
@@ -46,7 +46,7 @@ data_file.close()
 
 print("Total amount of data sets: ",dataSet)
 
-CalcBiSpec(xacel[2])
+
 
 startIndex,endIndex = input("Enter which data sets you would like to get the PS [ x , y ] (sets x to y) ").split(",")
 
@@ -77,25 +77,8 @@ PSXAve = [x/validSets for x in PSXAve]                                      #div
 PSYAve = [x/validSets for x in PSYAve]
 PSZAve = [x/validSets for x in PSZAve]
 
-####################################### MATLAB SECTION
-# Read matlab file and calculate the power spectrum
-matlabSignalDS = ReadMatlabFile("..\Data\SimulationOutput_Downsampled.txt")
-[psmatlabDS, freqmatlabDS]=CalcPowerSpec(matlabSignalDS,.02)
+print(freq[0:10])
 
-fig1 = plt.figure(7)
-fig1.suptitle("Powerspectrum of MATLAB Simulation (Downsampled)")
-plt.ylabel("Magnitude")
-plt.xlabel("Frequency [hz]")
-plt.plot(freqmatlabDS,psmatlabDS)
-
-matlabSignal = ReadMatlabFile("..\Data\SimulationOutput.txt")
-[psmatlab, freqmatlab]=CalcPowerSpec(matlabSignal,.00001)
-
-fig1 = plt.figure(8)
-fig1.suptitle("Powerspectrum of matlab simulation")
-plt.ylabel("Magnitude")
-plt.xlabel("Frequency [hz]")
-plt.plot(freqmatlab,psmatlab)
 
 ###################################### REAL DATA
 fig1 = plt.figure(1)
@@ -117,18 +100,56 @@ plt.ylabel("Magnitude")
 plt.xlabel("Frequency [hz]")
 plt.plot(freq[0:511],PSZAve[0:511])
 
+###################################### RAW REAL DATA
+fig1 = plt.figure(4)
+fig1.suptitle("Raw Acceleration X")
+plt.ylabel("Counts")
+plt.xlabel("Index")
+plt.plot(xacel[4])
 
+fig2 = plt.figure(5)
+fig2.suptitle("Raw Acceleration Y")
+plt.ylabel("Counts")
+plt.xlabel("Index")
+plt.plot(yacel[4])
+
+
+fig3 = plt.figure(6)
+fig3.suptitle("Raw Acceleration Z")
+plt.ylabel("Counts")
+plt.xlabel("Index")
+plt.plot(zacel[4])
+
+####################################### MATLAB SECTION
+# Read matlab file and calculate the power spectrum
+matlabSignalDS = ReadMatlabFile("..\Data\SimulationOutput_Downsampled.txt")
+[psmatlabDS, freqmatlabDS]=CalcPowerSpec(matlabSignalDS,.02)
+
+fig1 = plt.figure(7)
+fig1.suptitle("Powerspectrum of MATLAB Simulation (Downsampled)")
+plt.ylabel("Magnitude")
+plt.xlabel("Frequency [hz]")
+plt.plot(freqmatlabDS,psmatlabDS)
+
+matlabSignal = ReadMatlabFile("..\Data\SimulationOutput.txt")
+[psmatlab, freqmatlab]=CalcPowerSpec(matlabSignal,.00001)
+
+fig1 = plt.figure(8)
+fig1.suptitle("Powerspectrum of matlab simulation")
+plt.ylabel("Magnitude")
+plt.xlabel("Frequency [hz]")
+plt.plot(freqmatlab,psmatlab)
 ###################################### BISPECTRUM
 
-bispec = CalcBiSpec(yacel[5])
+bispec = CalcBiSpec(yacel[5],.00001)
 print(len(bispec))
-for i in bispec:
-    if len(i) != 256:
-        print(len(i))
+# for i in bispec:
+#     if len(i) != 256:
+#         print(len(i))
 plt.figure(9)
-heatmap,ax = sb.heatmap(bispec)
-heatmap.set(xlim=(0,25),ylim=(0,25))
-ax.set
+heatmap = sb.heatmap(bispec)
+#heatmap.set(xlim=(0,25),ylim=(0,25))
+
 # fig, ax = plt.subplots()
 
 # im = ax.imshow(bispec)

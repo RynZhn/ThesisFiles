@@ -23,6 +23,8 @@ def CalcBiSpec (dataArray,datarate):
     correctedArray = [x-mean for x in dataArray]                             #subtract the average from the data set to set the average to zero
     transform = fft.fft(correctedArray)                                      #find the fft amplitudes
     freq = fft.fftfreq(len(correctedArray),d=datarate)                       #find the freq corresponding to the fft amplitudes
+
+    print(freq[0:256])
     biSpecArray = [[]]
     print( range(int(len(transform))) )
     for f1 in range(int(len(transform)/4)):
@@ -30,7 +32,7 @@ def CalcBiSpec (dataArray,datarate):
             biSpecArray[f1].append(transform[f1].real*transform[f2].real*np.conjugate(transform[f1+f2]).real)
         biSpecArray.append([])
     del biSpecArray[-1]
-    bispecDF = pandas.DataFrame(np.array(biSpecArray),columns = freq, rows = freq)
+    bispecDF = pandas.DataFrame(np.array(biSpecArray),columns = freq[0:256], index = freq[0:256])
     return bispecDF
 
 def ReadMatlabFile(address):
