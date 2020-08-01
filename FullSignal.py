@@ -10,7 +10,7 @@ import os
 xacel, yacel, zacel = [],[],[]
 rotorSpeed = []
 
-file = "..\Data\\7-23-2020\80rpm\Test-80rpm-100g-7-23-2020.txt"
+file = "..\Data\\02-21-2020_0kg_80-160RPM_10-20MPH\\12_31_160RPM_0KG.txt"
 
 data_file = open(file,"r")
 
