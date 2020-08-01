@@ -116,7 +116,7 @@ plt.plot(yacel[4])
 
 fig3 = plt.figure(6)
 fig3.suptitle("Raw Acceleration Z")
-plt.ylabel("Counts")
+plt.ylabel("Acceleration [g's]")
 plt.xlabel("Index")
 plt.plot(zacel[4])
 
