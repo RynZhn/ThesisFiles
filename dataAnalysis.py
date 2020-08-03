@@ -141,13 +141,10 @@ plt.xlabel("Frequency [hz]")
 plt.plot(freqmatlab,psmatlab)
 ###################################### BISPECTRUM
 
-bispec = CalcBiSpec(yacel[5],.00001)
+bispec = CalcBiSpec(yacel[5],.02)
 print(len(bispec))
-# for i in bispec:
-#     if len(i) != 256:
-#         print(len(i))
 plt.figure(9)
-heatmap = sb.heatmap(bispec)
+heatmap = sb.heatmap(bispec, xticklabels=2, yticklabels=2)
 #heatmap.set(xlim=(0,25),ylim=(0,25))
 
 # fig, ax = plt.subplots()
